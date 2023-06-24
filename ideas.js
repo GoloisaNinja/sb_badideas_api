@@ -21,8 +21,8 @@ const ideas = [
         id: 4,
         title: "Sexy Math",
         idea: "Why are you teaching math? Jesus couldn't do fractions so why should my kid?",
-        followUp: "Numbers are woke and numbers on top of numbers will bring about the end of days.",
-        tags: ["apocalypse", "woke", "sexy math", "#nope"]
+        followUp: "Numbers on top of numbers sounds like fornication. It's Jesus saves, not Jesus sums.",
+        tags: ["apocalypse", "woke", "sexy math", "jesus"]
     },{
         id: 5,
         title: "Jesus is from Bethlehem, PA",
@@ -49,7 +49,23 @@ const getIdea = () => {
     return ideas[random];
 }
 
+const checkIdeaForMatch = (idea, terms) => {
+    return terms.some((term) => idea.title.toLowerCase().includes(term) ||
+        idea.idea.toLowerCase().includes(term) ||
+        idea.followUp.toLowerCase().includes(term) ||
+        idea.tags.includes(term));
+}
+
+const exhaustiveSearch = (search) => {
+    const normalized = search.toLowerCase();
+    const searchTerms = normalized.split(" ");
+    const result = [];
+    ideas.forEach((idea) => checkIdeaForMatch(idea, searchTerms) && result.push(idea));
+    return result;
+}
+
 module.exports = {
     ideas,
-    getIdea
+    getIdea,
+    exhaustiveSearch
 }
